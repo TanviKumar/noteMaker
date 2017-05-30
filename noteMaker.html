@@ -126,25 +126,28 @@
 
 		document.getElementById("new").addEventListener("click",function newNote(){
 
+			var input= document.getElementById("note").value;
 			
+			if(input!=""){
 			var newDiv = document.createElement("LI");
 			newDiv.id="newNote"+noteNumber.toString();
-			var input= document.getElementById("note").value;
+			
 
 			var a = document.createElement("a");
 			a.setAttribute('href',"#");
 
-			var text = document.createTextNode(input);
+			var text = document.createElement("p");
+			text.innerHTML=input;
 			text.id="text"+noteNumber.toString();
 
 			var delButton = document.createElement("BUTTON");
 			delButton.id="delete"+noteNumber.toString();
-			delButton.onClick="deleteFn()";
+			delButton.onclick=function(){deleteFn(delButton)};
 			delButton.className="deleteButton";
 					
 			var editButton = document.createElement("BUTTON");
 			editButton.id="edit" + noteNumber.toString();
-			editButton.onClick="editFn()";
+			editButton.onclick=function() { editFn(editButton)};
 			editButton.className="editButton";
 
 			a.appendChild(text);
@@ -154,6 +157,7 @@
 			document.getElementById("noteList").appendChild(newDiv);
 
 			noteNumber=noteNumber+1;
+			}
 
 		});
 		
