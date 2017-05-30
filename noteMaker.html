@@ -80,7 +80,14 @@
 
 		.deleteButton{
 			background  : url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png');
+			background-size : 25px 25px;
+			background-color: red;
 
+		}
+		.editButton{
+			background: url("https://cdn3.iconfinder.com/data/icons/edition/100/pen_paper_2-512.png");
+			background-size: 25px 25px;
+			background-color: green;
 		}
 
 
@@ -101,15 +108,17 @@
 		var noteNumber=1;
 
 
-		function deleteFn(){
-			var a = this.id;
-			var num= a[6];
-			var j=1;
-			for (var i = 7; i < a.length; i++,j++) {
-				num = num*Math.pow(10,j) + parseInt(a[i]);
-			};
-			var listId = "newNote" + num.toString();
-			listId.parentNode.removeChild(listId);
+		function deleteFn(delButton){
+		   var alink = delButton.parentNode;
+		   var li = alink.parentNode;
+		   li.parentNode.removeChild(li); 
+
+		}
+		function editFn(editButton){
+			var listText = editButton.parentNode.childNodes[0];
+			var text = listText.innerHTML;
+			var editedText=prompt("Edit the Note", text);
+			listText.innerHTML=editedText;
 
 		}
 
