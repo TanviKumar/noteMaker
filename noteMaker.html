@@ -70,6 +70,14 @@
 			position: relative;
 			float: right;
 			bottom: 0;
+			display: inline-block;
+			width: 2em;
+			height: 2em;
+		}
+
+		.deleteButton{
+			background  : url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png');
+
 		}
 
 
@@ -109,7 +117,6 @@
 			
 			var newDiv = document.createElement("LI");
 			newDiv.id="newNote"+noteNumber.toString();
-			noteNumber=noteNumber+1;
 			var input= document.getElementById("note").value;
 
 			var a = document.createElement("a");
@@ -120,13 +127,13 @@
 
 			var delButton = document.createElement("BUTTON");
 			delButton.id="delete"+noteNumber.toString();
-			delButton.innerHTML= "delete";
 			delButton.onClick="deleteFn()";
-		
+			delButton.className="deleteButton";
+					
 			var editButton = document.createElement("BUTTON");
 			editButton.id="edit" + noteNumber.toString();
-			editButton.innerHTML= "edit";
-			editButton.onClick="edit()";
+			editButton.onClick="editFn()";
+			editButton.className="editButton";
 
 			a.appendChild(text);
 			a.appendChild(delButton);
@@ -134,7 +141,7 @@
 			newDiv.appendChild(a);
 			document.getElementById("noteList").appendChild(newDiv);
 
-			
+			noteNumber=noteNumber+1;
 
 		});
 		
