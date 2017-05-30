@@ -34,15 +34,15 @@
 		}
 		#note{
 			width: 80%;
-			margin-left: 2%;
 			margin-top: 2%;
+			margin-left: 2%;
 		}
 		#new{
 			margin-top: 5%;
 			margin-right: 2%;
 			height: 5%; 
 			width: 15%;
-			float : right;
+			float: right;
 		}
 		#menuContainer ul {
 			overflow: hidden;
@@ -67,12 +67,12 @@
 		}
 		#menuContainer ul li p{
 			font-size: 90%;
+			margin-top: 0;
 			
 		}
 		#menuContainer ul li button{
 			position: relative;
 			float: right;
-			bottom: 0;
 			display: inline-block;
 			width: 2em;
 			height: 2em;
@@ -80,7 +80,7 @@
 
 		.deleteButton{
 			background  : url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png');
-			background-size : 25px 25px;
+			background-size: 25px 25px;
 			background-color: red;
 
 		}
@@ -96,8 +96,9 @@
 </head>
 <body>
 	<div id="titleContainer"> <h3>NOTES </h3></div>
+	
 	<div id="menuContainer">
-		<input type="text" id="note" placeholder="New note">
+		<textarea rows="4" id="note" placeholder="New note"></textarea>
 		<button type="button" id="new">Create</button>
 		<ul id="noteList"> </ul>
 
@@ -105,15 +106,18 @@
 	
 	<script type="text/javascript">
 		
+		//unique number given to each note.
 		var noteNumber=1;
 
-
+		//Delete function finds the li of the corresponding delete button and removes it from the list.
 		function deleteFn(delButton){
 		   var alink = delButton.parentNode;
 		   var li = alink.parentNode;
 		   li.parentNode.removeChild(li); 
 
 		}
+		
+		//Makes a prompt that lets you change the text of a note.
 		function editFn(editButton){
 			var listText = editButton.parentNode.childNodes[0];
 			var text = listText.innerHTML;
@@ -123,40 +127,49 @@
 		}
 
 		
-
+		//Event listener which is called when the create button is clicked.
 		document.getElementById("new").addEventListener("click",function newNote(){
-
+			
+			//Stores the note content.
 			var input= document.getElementById("note").value;
 			
+			//Creates note only for non-empty content
 			if(input!=""){
-			var newDiv = document.createElement("LI");
-			newDiv.id="newNote"+noteNumber.toString();
-			
+				
+				//creates list element and assigns id.
+				var newDiv = document.createElement("LI");
+				newDiv.id="newNote"+noteNumber.toString();
+				
+				//creates a tag 
+				var a = document.createElement("a");
+				a.setAttribute('href',"#");
+				
+				//creates p tag for the text to be displayed.
+				var text = document.createElement("p");
+				text.innerHTML=input;
+				text.id="text"+noteNumber.toString();
+				
+				//creates button that lets you delete a note 
+				var delButton = document.createElement("BUTTON");
+				delButton.id="delete"+noteNumber.toString();
+				delButton.onclick=function(){deleteFn(delButton)};
+				delButton.className="deleteButton";
+				
+				//creates button that lets you edit a note 
+				var editButton = document.createElement("BUTTON");
+				editButton.id="edit" + noteNumber.toString();
+				editButton.onclick = function() { editFn(editButton)};
+				editButton.className="editButton";
+				
+				//appends required elements to the list element and finally to the list
+				a.appendChild(text);
+				a.appendChild(delButton);
+				a.appendChild(editButton);
+				newDiv.appendChild(a);
+				document.getElementById("noteList").appendChild(newDiv);
 
-			var a = document.createElement("a");
-			a.setAttribute('href',"#");
 
-			var text = document.createElement("p");
-			text.innerHTML=input;
-			text.id="text"+noteNumber.toString();
-
-			var delButton = document.createElement("BUTTON");
-			delButton.id="delete"+noteNumber.toString();
-			delButton.onclick=function(){deleteFn(delButton)};
-			delButton.className="deleteButton";
-					
-			var editButton = document.createElement("BUTTON");
-			editButton.id="edit" + noteNumber.toString();
-			editButton.onclick=function() { editFn(editButton)};
-			editButton.className="editButton";
-
-			a.appendChild(text);
-			a.appendChild(delButton);
-			a.appendChild(editButton);
-			newDiv.appendChild(a);
-			document.getElementById("noteList").appendChild(newDiv);
-
-			noteNumber=noteNumber+1;
+				noteNumber=noteNumber+1;
 			}
 
 		});
