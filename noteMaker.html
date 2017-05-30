@@ -41,14 +41,37 @@
 			height: 5%; 
 			width: 15%;
 		}
-		.newNote0{
+		#menuContainer ul {
+			overflow: hidden;
+			padding: 1em;
+		}
+
+		#menuContainer ul li{
+			list-style: none;
+		}
+
+		#menuContainer ul li a{
+			display: block;
 			height: 30%;
-			width: 20%;
-			background-color: white;
+			width: 19%;
+			background: white;
+			padding: 1em;
+			margin: 1em;
 			float: left;
-			margin: 5px;
+			text-decoration: none;
+			color: black;
+			-webkit-box-shadow: 7px 7px 7px rgba(8, 16, 38, 0.6);
+		}
+		#menuContainer ul li p{
+			font-size: 100%;
 			
 		}
+		#menuContainer ul li button{
+			position: relative;
+			float: right;
+			bottom: 0;
+		}
+
 
 
 	</style>
@@ -57,40 +80,63 @@
 	<div id="titleContainer"> <h3>NOTES </h3></div>
 	<div id="menuContainer">
 		<input type="text" id="note" placeholder="New note">
-		<button type="button" id="new" onClick="newNote()">Create</button>
+		<button type="button" id="new">Create</button>
 		<ul id="noteList"> </ul>
 
 	</div>
 	
 	<script type="text/javascript">
 		
-		var i=1;
-		function newNote(){
+		var noteNumber=1;
+
+
+		function deleteFn(){
+			var a = this.id;
+			var num= a[6];
+			var j=1;
+			for (var i = 7; i < a.length; i++,j++) {
+				num = num*Math.pow(10,j) + parseInt(a[i]);
+			};
+			var listId = "newNote" + num.toString();
+			listId.parentNode.removeChild(listId);
+
+		}
+
+		
+
+		document.getElementById("new").addEventListener("click",function newNote(){
+
 			
 			var newDiv = document.createElement("LI");
-			newDiv.id="newNote"+i.toString();
-			newDiv.className="newNote0";
-			i=i+1;
+			newDiv.id="newNote"+noteNumber.toString();
+			noteNumber=noteNumber+1;
 			var input= document.getElementById("note").value;
+
+			var a = document.createElement("a");
+			a.setAttribute('href',"#");
+
 			var text = document.createTextNode(input);
-			text.id="text"+ i.toString();
-			text.className="noteText";
+			text.id="text"+noteNumber.toString();
+
 			var delButton = document.createElement("BUTTON");
-			delButton.id="delete"+i.toString();
-			delButton.className="delButtonClass";
-			delButton.onClick="delButtonFunction";
+			delButton.id="delete"+noteNumber.toString();
+			delButton.innerHTML= "delete";
+			delButton.onClick="deleteFn()";
+		
 			var editButton = document.createElement("BUTTON");
-			editButton.id="edit"+i.toString();
-			editButton.className="editButtonClass";
-			editButton.onClick="editButtonFunction";
-			newDiv.appendChild(text);
-			newDiv.appendChild(delButton);
-			newDiv.appendChild(editButton);
+			editButton.id="edit" + noteNumber.toString();
+			editButton.innerHTML= "edit";
+			editButton.onClick="edit()";
+
+			a.appendChild(text);
+			a.appendChild(delButton);
+			a.appendChild(editButton);
+			newDiv.appendChild(a);
 			document.getElementById("noteList").appendChild(newDiv);
 
 			
 
-		}
+		});
 		
 
 
