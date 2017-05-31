@@ -31,11 +31,13 @@
 			margin: 0 auto;
 			background-color: grey;
 			min-height: 95%;
+			border-radius: 10px;
 		}
 		#note{
 			width: 80%;
 			margin-top: 2%;
 			margin-left: 2%;
+			border-radius: 5px;
 		}
 		#new{
 			margin-top: 5%;
@@ -43,10 +45,12 @@
 			height: 5%; 
 			width: 15%;
 			float: right;
+			border-radius: 5px;
 		}
 		#menuContainer ul {
 			overflow: hidden;
 			padding: 1em;
+
 		}
 
 		#menuContainer ul li{
@@ -63,8 +67,28 @@
 			float: left;
 			text-decoration: none;
 			color: black;
-			-webkit-box-shadow: 7px 7px 7px rgba(8, 16, 38, 0.6);
+			-webkit-box-shadow: 7px 7px 7px rgba(8, 16, 38, 0.7);
+			-webkit-transform:rotate(5deg);
+			background-color : rgb(156, 169, 237);
+			border-radius: 7px;
 		}
+		#menuContainer ul li:nth-child(even) a{
+			-webkit-transform:rotate(-5deg);
+			background-color: rgb(157, 249, 248);
+		}
+		#menuContainer ul li:nth-child(3n) a{
+			-webkit-transform:rotate(3deg);
+			background-color: rgb(143, 252, 131);
+		}
+
+		#menuContainer ul li a:hover,#menuContainer ul li a:focus{
+			-webkit-box-shadow: 10px 10px 10px rgba(8, 16, 38, 0.7);
+			-webkit-transform: scale(1.2);
+			position: relative;
+			z-index: 7;
+		}
+
+		
 		#menuContainer ul li p{
 			font-size: 90%;
 			margin-top: 0;
@@ -81,13 +105,13 @@
 		.deleteButton{
 			background  : url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png');
 			background-size: 25px 25px;
-			background-color: red;
+			background-color: rgb(247, 175, 175);
 
 		}
 		.editButton{
 			background: url("https://cdn3.iconfinder.com/data/icons/edition/100/pen_paper_2-512.png");
 			background-size: 25px 25px;
-			background-color: green;
+			background-color: rgb(255, 240, 114);
 		}
 
 
@@ -96,28 +120,25 @@
 </head>
 <body>
 	<div id="titleContainer"> <h3>NOTES </h3></div>
-	
 	<div id="menuContainer">
 		<textarea rows="4" id="note" placeholder="New note"></textarea>
-		<button type="button" id="new">Create</button>
+		<input type="submit">
+		<button type="button" id="new">SAVE</button>
 		<ul id="noteList"> </ul>
 
 	</div>
 	
 	<script type="text/javascript">
 		
-		//unique number given to each note.
 		var noteNumber=1;
 
-		//Delete function finds the li of the corresponding delete button and removes it from the list.
+
 		function deleteFn(delButton){
 		   var alink = delButton.parentNode;
 		   var li = alink.parentNode;
 		   li.parentNode.removeChild(li); 
 
 		}
-		
-		//Makes a prompt that lets you change the text of a note.
 		function editFn(editButton){
 			var listText = editButton.parentNode.childNodes[0];
 			var text = listText.innerHTML;
@@ -127,41 +148,32 @@
 		}
 
 		
-		//Event listener which is called when the create button is clicked.
+
 		document.getElementById("new").addEventListener("click",function newNote(){
-			
-			//Stores the note content.
+
 			var input= document.getElementById("note").value;
-			
-			//Creates note only for non-empty content
+
 			if(input!=""){
-				
-				//creates list element and assigns id.
 				var newDiv = document.createElement("LI");
 				newDiv.id="newNote"+noteNumber.toString();
 				
-				//creates a tag 
 				var a = document.createElement("a");
 				a.setAttribute('href',"#");
-				
-				//creates p tag for the text to be displayed.
+
 				var text = document.createElement("p");
 				text.innerHTML=input;
 				text.id="text"+noteNumber.toString();
-				
-				//creates button that lets you delete a note 
+
 				var delButton = document.createElement("BUTTON");
 				delButton.id="delete"+noteNumber.toString();
 				delButton.onclick=function(){deleteFn(delButton)};
 				delButton.className="deleteButton";
-				
-				//creates button that lets you edit a note 
+						
 				var editButton = document.createElement("BUTTON");
 				editButton.id="edit" + noteNumber.toString();
 				editButton.onclick = function() { editFn(editButton)};
 				editButton.className="editButton";
-				
-				//appends required elements to the list element and finally to the list
+
 				a.appendChild(text);
 				a.appendChild(delButton);
 				a.appendChild(editButton);
