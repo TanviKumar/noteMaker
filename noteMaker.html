@@ -322,6 +322,7 @@
 				create(obj);
 				notes.push(obj);
 				localStorage.setItem("noteList" ,JSON.stringify(notes));
+				document.getElementById("note").value="";
 				noteNumber=noteNumber+1;
 			}
 		});
