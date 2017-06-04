@@ -1,5 +1,7 @@
 <html>
 <head>
+	<link href='https://fonts.googleapis.com/css?family=Barrio' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Rock Salt' rel='stylesheet'>
 	<title>Note Maker</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 	<style type="text/css">
@@ -7,66 +9,76 @@
 			margin: 0;
 			padding: 0;
 			font-family: helvetica, Arial, sans-serif;
-			background-color: black;
+			background-color: rgb(143, 108, 183);
 		}
 		#titleContainer{
-			background-color: black;
+			background-color: rgb(143, 108, 183);
 			text-align: center;
 			margin: 0 auto;
 			width: 100%;
 			height: 5%;
 		}
 		#titleContainer h3{
-			color: red;
+			font-family: 'Barrio';
+			font-size: 30px;
+			color: black;
 			text-decoration: bold;
 			text-align: center;
 			position: relative;
 			top:50%;
 			transform : translateY(-50%);
 			-webkit-transform: translateY(-50%);
-
 		}
 		#menuContainer{
 			width: 90%;
 			margin: 0 auto;
-			background-color: grey;
+			background-color: black;
 			min-height: 95%;
 			border-radius: 10px;
 		}
 		#note{
-			width: 60%;
+			width: 70%;
 			margin-top: 2%;
 			margin-left: 2%;
 			border-radius: 5px;
+			background-color: white;
+			color: purple;
 			
 		}
 		#sort{
 			margin-top: 1%;
 			margin-left: 2%;
 			height: 5%; 
-			width: 15%;
+			width: 10%;
 			border-radius: 5px;
 			float: left;
+			color: white;
+			background-color: rgb(28, 191, 172);
 
 		}
 		#new{
 			margin-top: 1%;
 			margin-right: 2%;
 			height: 5%; 
-			width: 15%;
+			width: 10%;
 			border-radius: 5px;
 			float: right;
+			color: white;
+			background-color: rgb(28, 191, 172);
 		}
 		#opt{
 			text-decoration: bold;
-			font-size: 90%;
-			margin-left:30% 
-
+			text-align: center; 
+			background-color : black;
+			color: white;
+		}
+		#priority{
+			background-color: black;
+			color :white;
 		}
 		#menuContainer ul {
 			overflow: hidden;
 			padding: 1em;
-
 		}
 		#menuContainer ul li{
 			list-style: none;
@@ -74,15 +86,17 @@
 		#menuContainer ul li a{
 			display: block;
 			min-height: 30%;
-			width: 19%; 
+			width: 18%; 
 			padding: 1em;
 			margin: 1em;
 			float: left;
 			text-decoration: none;
 			color: black;
+			font-family: 'Rock Salt';
+			font-size: 120%;
 			-webkit-box-shadow: 7px 7px 7px rgba(8, 16, 38, 0.7);
 			-webkit-transform:rotate(5deg);
-			border-radius: 7px;
+			border-radius: 12px;
 		}
 		#menuContainer ul li:nth-child(even) a{
 			-webkit-transform:rotate(-5deg);
@@ -90,17 +104,15 @@
 		#menuContainer ul li:nth-child(3n) a{
 			-webkit-transform:rotate(3deg);
 		}
-
 		.pri1{
-			background-color : rgb(156, 169, 237);	
+			background-color : #f93131;	
 		}
 		.pri2{
-			background-color: rgb(157, 249, 248);
+			background-color: #ff8e8e;
 		}
 		.pri3{
-			background-color: rgb(143, 252, 131);
+			background-color: #f9f572;
 		}
-
 		#menuContainer ul li a:hover,#menuContainer ul li a:focus{
 			-webkit-box-shadow: 10px 10px 10px rgba(8, 16, 38, 0.7);
 			-webkit-transform: scale(1.2);
@@ -119,17 +131,15 @@
 			width: 2em;
 			height: 2em;
 		}
-
 		.deleteButton{
 			background  : url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png');
 			background-size: 25px 25px;
-			background-color: rgb(247, 175, 175);
-
+			background-color: #88ea93;
 		}
 		.editButton{
 			background: url("https://cdn3.iconfinder.com/data/icons/edition/100/pen_paper_2-512.png");
 			background-size: 25px 25px;
-			background-color: rgb(255, 240, 114);
+			background-color: #f7b9f3;
 		}
 		.editingButton{
 			background: url("https://cdn.pixabay.com/photo/2017/01/13/01/22/ok-1976099_960_720.png");
@@ -138,9 +148,8 @@
 		}
 		.priButton{
 			background-size: 25px 25px;
-			background-color: rgb(255, 240, 114);
+			background-color: #cdf2eb;
 		}
-
 	</style>
 </head>
 <body>
@@ -183,7 +192,6 @@
 			else if(priorityValue==3)
 				a.className="pri3";
 		}
-
 		//Tells you which priority your not currently has.
 		function setPriText(priButton, priorityValue){
 			if(priorityValue==1)
@@ -206,9 +214,7 @@
 				}
 			};
 		    localStorage.setItem("noteList" ,JSON.stringify(notes));
-
 		}
-
 		//Lets you edit the text within the note when you click edit button. Changes are made within local Storage too.
 		function editFn(editButton, obj){
 			var listText = editButton.parentNode.childNodes[0];
@@ -216,7 +222,6 @@
 				listText.contentEditable = "true";
 				listText.focus();
 				editButton.className="editingButton";
-
 			}
 			else{
 				listText.contentEditable="false";
@@ -230,9 +235,7 @@
 				};
 				localStorage.setItem("noteList" ,JSON.stringify(notes));
 			}
-
 		}
-
 		//Priority of note is changed. Changes saved in local storage.
 		function priFn(priButton, obj){
 			var alink = priButton.parentNode;
@@ -259,13 +262,10 @@
 				}
 			};
 			localStorage.setItem("noteList" ,JSON.stringify(notes));
-
 		}
-
 		//The notes in the ul are sorted based on priority. notes is sorted. ul is made empty and then the notes are created
 		//for the ul again, in sorted manner.
 		document.getElementById("sort").addEventListener("click",function sort(){
-
 			notes = notes.sort(function(a,b){
 				return b.priority - a.priority;
 			});
@@ -275,27 +275,20 @@
 				create(notes[i]);
 			};
 			localStorage.setItem("noteList" ,JSON.stringify(notes));
-
 		});
 		
 		//new note is created and put into local storage
 		document.getElementById("new").addEventListener("click",function newNote(){
-
 			var input= document.getElementById("note").value;
-
 			if(input!=""){
-
 				var priority = document.getElementById("priority");
 				var priorityValue = priority.options[priority.selectedIndex].value;
-
 				var obj ={ id : noteNumber ,  text : input , priority : priorityValue };
 				create(obj);
 				notes.push(obj);
 				localStorage.setItem("noteList" ,JSON.stringify(notes));
-
 				noteNumber=noteNumber+1;
 			}
-
 		});
 		
 		//elements in the note are added and inserted into the ul
@@ -303,19 +296,16 @@
 			var number = obj.id;
 			var input = obj.text;
 			var priorityValue = obj.priority;
-
 			var newDiv = document.createElement("LI");
 			newDiv.id="newNote"+number.toString();
 			
 			var a = document.createElement("a");-
 			a.setAttribute('href',"#");
 			a.onclick=function(){return false;};
-
 			var text = document.createElement("p");
 			text.innerHTML=input;
 			text.id="text"+number.toString();
 			text.contentEditable="false";
-
 			var deleteButton , editButton, priButton;
 			deleteButton = buttonCreate(deleteButton,"delete", number);
 			deleteButton.onclick=function(){deleteFn(deleteButton, obj)};
@@ -323,10 +313,8 @@
 			editButton.onclick = function() { editFn(editButton, obj)};
 			priButton = buttonCreate(priButton, "pri", number);
 			priButton.onclick= function(){priFn(priButton, obj)};
-
 			setColor(a,priorityValue);
 			setPriText(priButton,priorityValue);
-
 			a.appendChild(text);
 			a.appendChild(deleteButton);
 			a.appendChild(priButton);
@@ -334,7 +322,6 @@
 			newDiv.appendChild(a);
 			var parent =document.getElementById("noteList"); 
 			parent.insertBefore(newDiv, parent.childNodes[0]);
-
 		}
 		
 		//When page is reloaded, the notes previously created are generated.
@@ -350,7 +337,6 @@
 				notes=[];
 				noteNumber = 1;
 			}
-
 		});
 		
 	</script>
