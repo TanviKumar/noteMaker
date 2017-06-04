@@ -163,16 +163,18 @@
 	
 	<script type="text/javascript">
 		
-		var noteNumber;
-		var notes= [];
-
+		var noteNumber;  //helps give unique id 
+		var notes= [];  //array to store infoormation about each of the notes to place in locall storage.
+		
+	        //Creates required button for the note and gives it respective attributes
 		function buttonCreate(element, text, number){
 			element = document.createElement("BUTTON");
 			element.id=text+number.toString();
 			element.className=text + "Button";
 			return element;
 		}
-
+		
+		//Assigns class for a guven priority which helps give corresponding color
 		function setColor(a, priorityValue){
 			if(priorityValue==1)
 				a.className="pri1";
@@ -182,6 +184,7 @@
 				a.className="pri3";
 		}
 
+		//Tells you which priority your not currently has.
 		function setPriText(priButton, priorityValue){
 			if(priorityValue==1)
 				priButton.innerHTML="H";
@@ -190,7 +193,8 @@
 			else if(priorityValue==3)
 				priButton.innerHTML="L";
 		}
-
+	
+		//Deletes respective note from the unordered list and also from the local storage
 		function deleteFn(deleteButton, obj){
 		   var alink = deleteButton.parentNode;
 		   var li = alink.parentNode;
@@ -201,10 +205,11 @@
 					break;
 				}
 			};
-			localStorage.setItem("noteList" ,JSON.stringify(notes));
+		    localStorage.setItem("noteList" ,JSON.stringify(notes));
 
 		}
 
+		//Lets you edit the text within the note when you click edit button. Changes are made within local Storage too.
 		function editFn(editButton, obj){
 			var listText = editButton.parentNode.childNodes[0];
 			if(listText.contentEditable=="false"){
@@ -228,6 +233,7 @@
 
 		}
 
+		//Priority of note is changed. Changes saved in local storage.
 		function priFn(priButton, obj){
 			var alink = priButton.parentNode;
 			var priorityValue;
@@ -256,6 +262,8 @@
 
 		}
 
+		//The notes in the ul are sorted based on priority. notes is sorted. ul is made empty and then the notes are created
+		//for the ul again, in sorted manner.
 		document.getElementById("sort").addEventListener("click",function sort(){
 
 			notes = notes.sort(function(a,b){
@@ -269,7 +277,8 @@
 			localStorage.setItem("noteList" ,JSON.stringify(notes));
 
 		});
-
+		
+		//new note is created and put into local storage
 		document.getElementById("new").addEventListener("click",function newNote(){
 
 			var input= document.getElementById("note").value;
@@ -288,7 +297,8 @@
 			}
 
 		});
-
+		
+		//elements in the note are added and inserted into the ul
 		function create(obj){
 			var number = obj.id;
 			var input = obj.text;
@@ -327,6 +337,7 @@
 
 		}
 		
+		//When page is reloaded, the notes previously created are generated.
 		window.addEventListener("load", function(){
 			notes= JSON.parse(localStorage.getItem("noteList"));
 			if(notes){
