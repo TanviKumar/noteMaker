@@ -189,7 +189,7 @@
 		var noteNumber;  //helps give unique id 
 		var notes= [];  //array to store infoormation about each of the notes to place in locall storage.
 		
-	     //Creates required button for the note and gives it respective attributes
+	        //Creates required button for the note and gives it respective attributes
 		function buttonCreate(element, text, number, fn){
 			element = document.createElement("BUTTON");
 			element.id=text+number.toString();
@@ -221,19 +221,18 @@
 		function deleteFn(e){
 			var alink = e.target.parentNode;
 			var li = alink.parentNode;
+			var id = li.id;
 			li.parentNode.removeChild(li);
 
-			var id = li.id;
-			var number = Number(id.slice(7,id.length));
-
 			for (var i = 0; i < notes.length; i++) {
-				if(notes[i].id==number){
+				if(notes[i].newNoteId==id){
 					notes.splice(i,1);
 					break;
 				}
+
 			};
 
-			if(notes.length!=0)
+			if(notes.length)
 				localStorage.setItem("noteList" ,JSON.stringify(notes));
 			else
 				localStorage.clear();
@@ -255,10 +254,9 @@
 				e.target.className="editButton";
 
 				var id = li.id;
-				var number = Number(id.slice(7,id.length));
 
 				for (var i = 0; i < notes.length; i++) {
-					if(notes[i].id==number){
+					if(notes[i].newNoteId==id){
 						notes[i].text = listText.innerHTML;
 						break;
 					}
@@ -288,10 +286,9 @@
 
 			var li = alink.parentNode;
 			var id = li.id;
-			var number = Number(id.slice(7,id.length));
 			
 			for (var i = 0; i < notes.length; i++) {
-				if(notes[i].id==number){
+				if(notes[i].newNoteId==id){
 					notes[i].priority=priorityValue;
 					break;
 				}
@@ -318,12 +315,13 @@
 			if(input!=""){
 				var priority = document.getElementById("priority");
 				var priorityValue = priority.options[priority.selectedIndex].value;
-				var obj ={ id : noteNumber ,  text : input , priority : priorityValue };
+				var Nid = "newNote" + noteNumber.toString();
+				var obj ={ newNoteId : "newNote"+noteNumber.toString() ,id : noteNumber ,  text : input , priority : priorityValue };
 				create(obj);
 				notes.push(obj);
 				localStorage.setItem("noteList" ,JSON.stringify(notes));
-				document.getElementById("note").value="";
 				noteNumber=noteNumber+1;
+				document.getElementById("note").value="";
 			}
 		});
 		
@@ -333,7 +331,7 @@
 			var input = obj.text;
 			var priorityValue = obj.priority;
 			var newDiv = document.createElement("LI");
-			newDiv.id="newNote"+number.toString();
+			newDiv.id = obj.newNoteId;
 			
 			var a = document.createElement("a");
 			a.setAttribute('href',"#");
@@ -374,6 +372,7 @@
 				notes=[];
 				noteNumber = 1;
 			}
+			//localStorage.clear();
 			
 		});
 
